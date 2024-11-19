@@ -28,7 +28,7 @@ public class UserService {
     private TokenService tokenService;
 
     public ResponseDTO login(@RequestBody LoginRequestDTO dto) {
-        User user = this.repository.findByLogin(dto.login()).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = this.repository.findUser(dto.login()).orElseThrow(() -> new RuntimeException("User not found"));
         if (passwordEncoder.matches(dto.password(), user.getPassword())) {
             String token = this.tokenService.generateToken(user);
             return ResponseEntity.ok(new ResponseDTO(user.getName(), token, user.getUserRole().toString())).getBody();
@@ -38,7 +38,7 @@ public class UserService {
     }
 
     public ResponseDTO register(RegisterRequestDTO dto) {
-        Optional<User> user = this.repository.findByLogin(dto.login());
+        Optional<User> user = this.repository.findUser(dto.login());
 
         if (user.isEmpty()) {
             User newUser = new User();
@@ -53,27 +53,38 @@ public class UserService {
             return ResponseEntity.ok(new ResponseDTO(newUser.getName(), token, newUser.getUserRole().toString())).getBody();
 
         } else {
-            return ResponseEntity.badRequest().body(new ResponseDTO("Usuário já cadastrado", "", "")).getBody();
+            throw new RuntimeException("User already registered");
         }
+    }
+
+    public GetUserDTO delete(String login){
+        var user = repository.findUser(login).get();
+        user.disabled();
+        return new GetUserDTO(user);
+    }
+
+    public GetUserDTO activate(String login){
+        var user = repository.findUser(login).get();
+        user.activate();
+        return new GetUserDTO(user);
     }
 
     public Page<GetUserDTO> listActive(Pageable pagination) {
         return repository.findActive(pagination).map(GetUserDTO::new);
     }
 
+    public Page<GetUserDTO> listInactive(Pageable pagination) {
+        return repository.findInactive(pagination).map(GetUserDTO::new);
+    }
+
     public Page<GetUserDTO> listAll(Pageable pagination) {
-        return repository.findAll(pagination).map(GetUserDTO::new);
+        return repository.findAllUsers(pagination).map(GetUserDTO::new);
     }
 
-    public void delete(String login){
-        var user = repository.findByLogin(login).get();
-        user.disabled();
-    }
 
-    public void activate(String login){
-        var user = repository.findUser(login).get();
-        user.activate();
-    }
+
+
+
 
 }
 

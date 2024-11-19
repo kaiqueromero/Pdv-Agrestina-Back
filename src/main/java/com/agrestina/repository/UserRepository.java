@@ -9,15 +9,18 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, String> {
-    Optional<User> findByLogin(String login);
 
-    boolean existsByNameIgnoreCase(String name);
+    boolean existsByNameIgnoringCase(String name);
     @Query("SELECT u FROM User u WHERE u.active=true")
     Page<User> findActive(Pageable pageable);
 
+    boolean existsByNameIgnoreCase(String name);
+    @Query("SELECT u FROM User u WHERE u.active=false")
+    Page<User> findInactive(Pageable pageable);
+
     boolean existsByName(String name);
     @Query("SELECT u FROM User u")
-    Page<User> findAll(Pageable pageable);
+    Page<User> findAllUsers(Pageable pageable);
 
     boolean existsByLoginIgnoringCase(String login);
     @Query("SELECT u FROM User u WHERE u.login = :login")

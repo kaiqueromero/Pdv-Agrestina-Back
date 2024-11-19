@@ -23,19 +23,19 @@ public class AuthController {
     @Autowired
     private UserService service;
 
-    @PostMapping("/login")
-    @Transactional
-    public ResponseEntity<ResponseDTO> login (@RequestBody LoginRequestDTO body){
-        var user = this.service.login(body);
-        log.info("Login efetuado com sucesso. Login {}", body.login());
-        return ResponseEntity.ok(user);
-    }
-
     @PostMapping("/register")
     @Transactional
     public ResponseEntity<ResponseDTO> register (@RequestBody RegisterRequestDTO body){
         var newUser = this.service.register(body);
         log.info("Usuário cadastrado com sucesso. Login {}", body.login());
         return ResponseEntity.ok(newUser);
+    }
+
+    @PostMapping("/login")
+    @Transactional
+    public ResponseEntity<ResponseDTO> login (@RequestBody LoginRequestDTO body){
+        var user = this.service.login(body);
+        log.info("Login efetuado com sucesso. Login {}", body.login());
+        return ResponseEntity.ok(user);
     }
 }
