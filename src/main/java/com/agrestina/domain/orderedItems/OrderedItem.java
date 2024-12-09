@@ -23,6 +23,7 @@ public class OrderedItem {
     @ManyToOne
     private Product product;
     private Integer quantity;
+    @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
     public OrderedItem(Order order, Product product, Integer quantity) {

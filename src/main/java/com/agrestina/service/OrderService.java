@@ -7,9 +7,7 @@ import com.agrestina.domain.user.User;
 import com.agrestina.dto.order.OrderDTO;
 import com.agrestina.dto.order.RegisterOrderDTO;
 import com.agrestina.exeption.ValidationException;
-import com.agrestina.repository.InventoryRepository;
-import com.agrestina.repository.OrderRepository;
-import com.agrestina.repository.ProductRepository;
+import com.agrestina.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +25,12 @@ public class OrderService {
 
     @Autowired
     private InventoryRepository inventoryRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ClientRepository clientRepository;
 
     @Transactional
     public OrderDTO register(RegisterOrderDTO dto, User user, Client client) {

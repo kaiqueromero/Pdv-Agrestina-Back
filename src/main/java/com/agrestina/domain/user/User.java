@@ -1,9 +1,13 @@
 package com.agrestina.domain.user;
 
 
+import com.agrestina.domain.order.Order;
 import com.agrestina.dto.user.RegisterRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "users")
 @Entity
@@ -32,6 +36,9 @@ public class User {
 
     @Column(nullable = false)
     private boolean active;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Order> sales = new ArrayList<>();
 
     public void disabled(){
         this.active = false;

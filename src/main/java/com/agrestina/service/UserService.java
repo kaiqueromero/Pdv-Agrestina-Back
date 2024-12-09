@@ -6,6 +6,7 @@ import com.agrestina.dto.user.LoginRequestDTO;
 import com.agrestina.dto.user.RegisterRequestDTO;
 import com.agrestina.dto.user.ResponseDTO;
 import com.agrestina.infra.security.TokenService;
+import com.agrestina.repository.ClientRepository;
 import com.agrestina.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

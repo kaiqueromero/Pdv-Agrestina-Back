@@ -3,7 +3,7 @@ CREATE TABLE ordered_items (
                               order_id BIGINT NOT NULL,
                               product_id BIGINT NOT NULL,
                               quantity INT NOT NULL,
-                              unity_price DECIMAL(10,2) NOT NULL,
+                              unit_price DECIMAL(10,2) NOT NULL,
 
                               PRIMARY KEY(id),
                               CONSTRAINT ORDERED_ITEMS_FK_PRODUCT FOREIGN KEY(product_id) REFERENCES products(id),

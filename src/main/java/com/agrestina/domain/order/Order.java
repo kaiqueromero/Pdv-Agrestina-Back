@@ -6,6 +6,7 @@ import com.agrestina.domain.orderedItems.OrderedItem;
 import com.agrestina.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -41,5 +42,4 @@ public class Order {
         this.user = user;
         this.client = client;
     }
-
 }
